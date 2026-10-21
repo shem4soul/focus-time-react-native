@@ -1,18 +1,34 @@
-import { StatusBar } from "expo-status-bar";
+import React, { useState } from "react";
 import {
-  StyleSheet,
   Text,
-  safeAreaView,
+  View,
+  StyleSheet,
+  SafeAreaView,
   Platform,
   StatusBar,
 } from "react-native";
 
+import Constants from "expo-constants";
+
+import { colors } from "./src/utils/colors";
+
+import { Focus } from "./src/features/Focus";
+
 export default function App() {
+  const [currentSubject, setCurrentSubject] = useState(null);
+
   return (
-    <safeAreaView style={styles.container}>
-      <Text style={styles.text}>Hello shem, Germany is ready for you</Text>
-      <StatusBar style="auto" />
-    </safeAreaView>
+    <SafeAreaView style={styles.container}>
+      {!currentSubject ? (
+        <Focus addSubject={setCurrentSubject} />
+      ) : (
+        <View>
+          <Text style={{ color: colors.white }}>
+            I am going to render the timer for {currentSubject}
+          </Text>
+        </View>
+      )}
+    </SafeAreaView>
   );
 }
 
@@ -20,9 +36,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
-    bachgroundColor: colors.darkBlue,
-  },
-  text: {
-    color: colors.white,
+    backgroundColor: colors.darkBlue,
   },
 });
